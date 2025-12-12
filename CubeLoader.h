@@ -11,6 +11,7 @@
 
 typedef struct {
         float position[3];
+        float rotation[3];
         float size[3];
         uint8_t color_RGB[3];
 } Cube_Cube;
@@ -59,19 +60,24 @@ Cube_Cube* Cube_Load(const char* IN_path, uint32_t* OUT_num_cubes) {
                                 *((float*) (file_data_offset + sizeof(float)*1)),
                                 *((float*) (file_data_offset + sizeof(float)*2))
                         },
-                        .size = {
+                        .rotation = {
                                 *((float*) (file_data_offset + sizeof(float)*3)),
                                 *((float*) (file_data_offset + sizeof(float)*4)),
                                 *((float*) (file_data_offset + sizeof(float)*5))
                         },
+                        .size = {
+                                *((float*) (file_data_offset + sizeof(float)*6)),
+                                *((float*) (file_data_offset + sizeof(float)*7)),
+                                *((float*) (file_data_offset + sizeof(float)*8))
+                        },
                         .color_RGB = {
-                                *((uint8_t*) (file_data_offset + sizeof(float)*6 + sizeof(uint8_t)*0)),
-                                *((uint8_t*) (file_data_offset + sizeof(float)*6 + sizeof(uint8_t)*1)),
-                                *((uint8_t*) (file_data_offset + sizeof(float)*6 + sizeof(uint8_t)*2))
+                                *((uint8_t*) (file_data_offset + sizeof(float)*9 + sizeof(uint8_t)*0)),
+                                *((uint8_t*) (file_data_offset + sizeof(float)*9 + sizeof(uint8_t)*1)),
+                                *((uint8_t*) (file_data_offset + sizeof(float)*9 + sizeof(uint8_t)*2))
                         }
                 };
 
-                file_data_offset += 6*sizeof(float) + 3*sizeof(uint8_t);
+                file_data_offset += 9*sizeof(float) + 3*sizeof(uint8_t);
         }
 
         free(file_data);

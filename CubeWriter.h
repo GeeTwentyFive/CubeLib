@@ -11,6 +11,7 @@
 
 typedef struct {
         float position[3];
+        float rotation[3];
         float size[3];
         uint8_t color_RGB[3];
 } Cube_Cube;
@@ -22,7 +23,7 @@ typedef struct {
 int Cube_Write(Cube_Cube* IN_cubes, uint32_t IN_num_cubes, const char* IN_out_path) {
         size_t out_data_size = (
                 4 +
-                (6*sizeof(float) + 3*sizeof(uint8_t)) * IN_num_cubes
+                (9*sizeof(float) + 3*sizeof(uint8_t)) * IN_num_cubes
         );
         char* out_buf = (char*) malloc(out_data_size);
         if (!out_buf) return 0;
@@ -39,6 +40,13 @@ int Cube_Write(Cube_Cube* IN_cubes, uint32_t IN_num_cubes, const char* IN_out_pa
                 *((float*) out_buf_front) = IN_cubes[i].position[1];
                 out_buf_front += sizeof(float);
                 *((float*) out_buf_front) = IN_cubes[i].position[2];
+                out_buf_front += sizeof(float);
+
+                *((float*) out_buf_front) = IN_cubes[i].rotation[0];
+                out_buf_front += sizeof(float);
+                *((float*) out_buf_front) = IN_cubes[i].rotation[1];
+                out_buf_front += sizeof(float);
+                *((float*) out_buf_front) = IN_cubes[i].rotation[2];
                 out_buf_front += sizeof(float);
 
                 *((float*) out_buf_front) = IN_cubes[i].size[0];
